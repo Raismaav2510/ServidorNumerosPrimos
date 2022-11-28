@@ -1,4 +1,4 @@
-import Modelo.ArregloAleatorio;
+import Modelo.Arreglo;
 import Modelo.Primos;
 import Modelo.PrimosES;
 import Modelo.PrimosFJ;
@@ -8,26 +8,40 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ForkJoinPool;
 
 public class ImplementControlador extends UnicastRemoteObject implements Controlador {
-    private ArregloAleatorio arreglo;
+    private Arreglo arregloFinal, arregloAuxiliar;
     private long inicio;
     private long fin;
     protected ImplementControlador() throws RemoteException {
         super();
-        this.arreglo = new ArregloAleatorio();
+        this.arregloFinal = new Arreglo();
+        this.arregloAuxiliar = new Arreglo();
     }
 
     public void guardar(int largo) {
-        arreglo.arregloAleatorio(largo);
+        if (!arregloAuxiliar.isInicializado()){
+            arregloAuxiliar.arregloAleatorio(largo);
+        } else {
+            arregloFinal.sumar(largo, arregloAuxiliar);
+        }
     }
 
     public String imprimir() {
-        return arreglo.imprimirArreglo();
+        if (arregloFinal.isInicializado()) {
+            return arregloFinal.imprimirArreglo();
+        } else {
+            return arregloAuxiliar.imprimirArreglo();
+        }
+    }
+
+    public void limpiar()  {
+        arregloFinal.reset();
+        arregloAuxiliar.reset();
     }
 
     public String buscarSecuencial() {
         String primosOrdenados;
         this.inicio = System.currentTimeMillis();
-        Primos primos = new Primos(arreglo.getArreglo());
+        Primos primos = new Primos(arregloFinal.getArreglo());
         primosOrdenados = primos.getPrimos();
         this.fin = System.currentTimeMillis();
         return primosOrdenados;
@@ -37,7 +51,7 @@ public class ImplementControlador extends UnicastRemoteObject implements Control
         String primosOrdenados;
         ForkJoinPool pool = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
         this.inicio = System.currentTimeMillis();
-        primosOrdenados = pool.invoke(new PrimosFJ(arreglo.getArreglo()));
+        primosOrdenados = pool.invoke(new PrimosFJ(arregloFinal.getArreglo()));
         this.fin = System.currentTimeMillis();
         return primosOrdenados;
     }
@@ -45,7 +59,7 @@ public class ImplementControlador extends UnicastRemoteObject implements Control
     public String buscarExecutor() {
         String primosOrdenados;
         this.inicio = System.currentTimeMillis();
-        PrimosES primos = new PrimosES(arreglo.getArreglo());
+        PrimosES primos = new PrimosES(arregloFinal.getArreglo());
         primos.calcularPrimos();
         primosOrdenados = primos.getPrimos();
         this.fin = System.currentTimeMillis();
@@ -54,5 +68,9 @@ public class ImplementControlador extends UnicastRemoteObject implements Control
 
     public long getTiempo() {
         return fin - inicio;
+    }
+
+    public boolean verificar() throws RemoteException {
+        return arregloFinal.isInicializado();
     }
 }

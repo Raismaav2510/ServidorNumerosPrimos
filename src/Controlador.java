@@ -8,6 +8,8 @@ public interface Controlador extends Remote {
 
     String imprimir() throws RemoteException;
 
+    void limpiar() throws RemoteException;
+
     String buscarSecuencial() throws RemoteException;
 
     String buscarForkJoin() throws RemoteException;
@@ -15,4 +17,6 @@ public interface Controlador extends Remote {
     String buscarExecutor() throws RemoteException;
 
     long getTiempo() throws RemoteException;
+
+    boolean verificar() throws RemoteException;
 }

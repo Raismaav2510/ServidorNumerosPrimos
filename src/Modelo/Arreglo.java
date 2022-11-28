@@ -2,16 +2,21 @@ package Modelo;
 
 import java.util.Arrays;
 
-public class ArregloAleatorio {
-    private int arreglo[];
+public class Arreglo {
+    private int arreglo[], arreglosumado[];
+    private boolean inicializado;
 
-    public void arregloAleatorio(int limite) {
+    public Arreglo() {
+        this.inicializado = false;
+    }
+
+    public void arregloAleatorio(int largo) {
         int valor = 0;
         boolean existe;
-        arreglo = new int[limite];
+        arreglo = new int[largo];
         for (int i = 0; i < arreglo.length; i++) {
             existe = false;
-            valor = (int) ((Math.random() * limite * 100) + 2);
+            valor = (int) ((Math.random() * largo * 100) + 2);
             for (int j = 0; j < i; j++) {
                 if (arreglo[j] == valor) {
                     existe = true;
@@ -25,6 +30,18 @@ public class ArregloAleatorio {
             }
         }
         ordenar(0, arreglo.length - 1);
+        inicializado = true;
+    }
+
+    public void sumar(int largo, Arreglo primerArreglo) {
+        int arreglo1[], arreglo2[];
+        arregloAleatorio(largo);
+        arreglo1 = primerArreglo.getArreglo();
+        arreglo2 = getArreglo();
+
+        arreglo = new int[arreglo1.length + arreglo2.length];
+        System.arraycopy(arreglo1, 0, arreglo, 0, arreglo1.length);
+        System.arraycopy(arreglo2, 0, arreglo, arreglo1.length, arreglo2.length);
     }
 
     private void ordenar(int izquierda, int derecha) {
@@ -85,5 +102,13 @@ public class ArregloAleatorio {
 
     public int[] getArreglo() {
         return Arrays.copyOf(this.arreglo, this.arreglo.length);
+    }
+
+    public boolean isInicializado(){
+        return inicializado;
+    }
+
+    public void reset() {
+        this.inicializado = false;
     }
 }

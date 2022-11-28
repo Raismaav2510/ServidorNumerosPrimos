@@ -18,7 +18,6 @@ public class PrimosES {
     }
 
     public void calcularPrimos() {
-        System.out.println(arreglo);
         ExecutorService executor= Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         for (int i = 0; i < arreglo.length; i++) {
             executor.execute(new Hilo(arreglo[i], primos));

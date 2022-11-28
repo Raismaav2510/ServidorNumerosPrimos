@@ -14,7 +14,6 @@ public class Hilo implements Runnable {
             if (numero % i == 0)
                 return false;
         }
-        System.out.println(valor);
         return true;
     }
 
@@ -23,7 +22,6 @@ public class Hilo implements Runnable {
         if (esPrimo(valor)) {
             String mensaje = primos.getPrimos();
             mensaje += valor + "\n";
-            System.out.println(mensaje);
             primos.setPrimos(mensaje);
         }
     }
