@@ -42,6 +42,7 @@ public class Arreglo {
         arreglo = new int[arreglo1.length + arreglo2.length];
         System.arraycopy(arreglo1, 0, arreglo, 0, arreglo1.length);
         System.arraycopy(arreglo2, 0, arreglo, arreglo1.length, arreglo2.length);
+        ordenar(0, arreglo.length - 1);
     }
 
     private void ordenar(int izquierda, int derecha) {

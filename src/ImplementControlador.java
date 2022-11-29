@@ -2,7 +2,6 @@ import Modelo.Arreglo;
 import Modelo.Primos;
 import Modelo.PrimosES;
 import Modelo.PrimosFJ;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ForkJoinPool;
