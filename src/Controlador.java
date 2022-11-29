@@ -18,5 +18,6 @@ public interface Controlador extends Remote {
 
     long getTiempo() throws RemoteException;
 
-    boolean verificar() throws RemoteException;
+    boolean verificarArregloFinal() throws RemoteException;
+    boolean verificarArregloAuxiliar() throws RemoteException;
 }

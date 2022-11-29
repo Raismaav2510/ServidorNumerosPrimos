@@ -70,7 +70,11 @@ public class ImplementControlador extends UnicastRemoteObject implements Control
         return fin - inicio;
     }
 
-    public boolean verificar() throws RemoteException {
+    public boolean verificarArregloFinal() throws RemoteException {
         return arregloFinal.isInicializado();
+    }
+
+    public boolean verificarArregloAuxiliar() throws RemoteException {
+        return arregloAuxiliar.isInicializado();
     }
 }
